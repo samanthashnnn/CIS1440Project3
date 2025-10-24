@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png" sizes="16x16">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>Flashcards</ul>
+            <ul>Memory Game</ul>
+        </nav>
+        <h1>Study Session</h1>
+        <p><date></date></p>
+    </header>
+    <main>
+        <section id="startCard">
+            <h2>Try out:</h2>
+            <button class="modeToggle flashcard">Flashcard Mode</button>
+            <button class="modeToggle memoryGame">Memory Game</button>
+        </section>
+        <section id="fcCard">
+            <h3>Flashcards</h3>
+            <button class="refreshBtn" id="fcRefresh">Refresh</button>
+            <!--display flashcard GameBoard here-->
+            <article id="fcGameBoard">
+                <!--display representation of the completed flashcards array-->
+                <div id="CompletedFCStack">
+                    <p id="completedCount"></p>
+                </div>
+                <div id="currentFC">
+                    <h5 id="fcFront" lang="ja"></h5>
+                    <h5 id="fcBack"></h5>
+                    <nav id="fcNav">
+                        <button id="fcNavReturn"><!--return icon--></button>
+                        <button id="fcNavRepeat">Repeat</button>
+                        <button id="fcNavLearned">Learned</button>
+                        <button id="fcNavNext"><!--Next icon--></button>
+                    </nav>
+                </div>
+                <div id="upcomingFCStack">
+                    <p id="upcomingCount"></p>
+                </div>
+            </article>
+        </section>
+        <section id="mgCard">
+            <h3>Memory Game</h3>
+            <button class="refreshBtn" id="mgRefresh">Refresh</button>
+            <article id="mgGameBoard">
+                <!--Memory Mode Game Board displayed here through js-->
+
+            </article>
+            <article id="scoreCard">
+                <div id="moves">
+                    <h4>Moves:</h4>
+                    <p id="moveDisplay"></p>
+                </div>
+                <!--Could add time here-->
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>&copy;2025 Samantha Shannon</p>
+        <button class="modeToggle"></button>
+    </footer>
+    <script src="scripts/ap.js"></script>
+</body>
+</html>
