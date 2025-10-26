@@ -13,18 +13,15 @@
 <body>
     <header>
         <nav>
-            <ul>Flashcards</ul>
-            <ul>Memory Game</ul>
+            <ul>
+                <li>Flashcards</li>
+                <li>Memory Game</li>
+            </ul>
         </nav>
         <h1>Study Session</h1>
         <p><date></date></p>
     </header>
     <main>
-        <section id="startCard">
-            <h2>Try out:</h2>
-            <button class="modeToggle flashcard">Flashcard Mode</button>
-            <button class="modeToggle memoryGame">Memory Game</button>
-        </section>
         <section id="fcCard">
             <h3>Flashcards</h3>
             <button class="refreshBtn" id="fcRefresh">Refresh</button>
@@ -35,13 +32,14 @@
                     <p id="completedCount"></p>
                 </div>
                 <div id="currentFC">
-                    <h5 id="fcFront" lang="ja"></h5>
-                    <h5 id="fcBack"></h5>
+                    <p id="fcFront" lang="ja"></p>
+                    <p id="fcBack"></p>
                     <nav id="fcNav">
                         <button id="fcNavReturn"><!--return icon--></button>
                         <button id="fcNavRepeat">Repeat</button>
+                        <button id="fcNavFlip">Flip Card</button>
                         <button id="fcNavLearned">Learned</button>
-                        <button id="fcNavNext"><!--Next icon--></button>
+                        <button id="fcNavNext">➜</button>
                     </nav>
                 </div>
                 <div id="upcomingFCStack">

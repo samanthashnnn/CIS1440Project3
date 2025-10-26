@@ -16,17 +16,39 @@
 
 }
 
-/*colors*/
 :root{
+/*colors*/
     --red: rgb(201, 31, 31);
     --yellow: rgb(255, 244, 31);
     --yellowLight: rgba(255, 244, 31, .9);
     --bluePrimary: rgb(31, 38, 255);
     --blueCard: rgb(31, 38, 115);
     --white: rgb(240, 255, 255);
+/*padding & margin*/
+    --one: 8px;
+    --two: 16px;
+    --three: 24px;
+    --four:40px;
 }
 
 /*homepage styling*/
 h1{
     font-family: "Happy Monkey";
+}
+
+h3{
+    display:inline;
+}
+
+/*flashcard mode*/
+#fcCard{
+    background-color: azure;
+    border: 1px solid black;
+    margin: var(--four) auto;
+    width: 75%;
+    padding:var(--three);
+}
+
+.fcback{
+    background-color: black;
 }

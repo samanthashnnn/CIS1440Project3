@@ -20,10 +20,68 @@ const terms = [
     {front:"鶏", back:"Chicken", img:"chicken.png"},
     {front:"虎", back:"Tiger", img:"tiger.png"}
 ]
-const startCard = document.getElementById("startCard");
-const p = document.createElement("p");
-terms.forEach((e) => {
-    p.textContent = e.front;
-    startCard.appendChild(p);
 
-})
+const learnedCards = [];
+const currentCardFront = document.querySelector("#fcFront");
+const currentCardBack = document.querySelector("#fcBack");
+const fcNav = document.querySelector("#fcNav");
+
+let loopNum = 0;
+let mode = "fc";
+
+document.querySelector("#fcNavNext").addEventListener("click", moveToNextCard);
+document.querySelector("#fcNavFlip").addEventListener("click", renderCardBack);
+document.querySelector("#fcNavLearned").addEventListener("click", fcLearned);
+document.addEventListener("DOMContentLoaded", renderCardFront);
+
+function renderCardFront(){
+    if(terms.length === 0) return;
+    currentCardFront.hidden = false;
+    currentCardBack.hidden = true;
+    currentCardFront.textContent = terms[loopNum].front;
+}
+
+function renderCardBack(){
+    currentCardFront.hidden = true;
+    currentCardBack.hidden = false;
+    currentCardBack.textContent = terms[loopNum].back;
+}
+
+function moveToNextCard(){
+    loopNum++;
+    if(loopNum >= terms.length){
+        loopNum = 0;
+        checkWinCon();
+    }
+    renderCardFront();
+}
+
+function fcLearned(){
+    learnedCards.push(terms.splice(loopNum, 1)[0]);
+    if(loopNum>= terms.length) loopNum = 0;
+    console.log(learnedCards);
+    checkWinCon(true);
+    renderCardFront();
+}
+
+function checkWinCon(learned = false){
+    if (mode == "fc"){
+        if (terms.length === 0 && learnedCards.length === 20){
+            console.log("You've learned all the animal kanji for the day");
+            displayWin();
+        } else if(!learned){
+            loopNum++;
+        }
+    } else if (mode == "mm"){
+
+    }
+}
+
+function displayWin(){
+    currentCardFront.hidden = true;
+    currentCardBack.hidden = true;
+    fcNav.hidden = true;
+}
+
+
+
