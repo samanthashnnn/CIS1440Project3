@@ -29,7 +29,7 @@ const fcNav = document.querySelector("#fcNav");
 let loopNum = 0;
 let mode = "fc";
 
-document.querySelector("#fcNavNext").addEventListener("click", moveToNextCard);
+document.querySelector("#fcNavNext").addEventListener("click", moveToNextCard); //this one renamed to skip
 document.querySelector("#fcNavFlip").addEventListener("click", renderCardBack);
 document.querySelector("#fcNavLearned").addEventListener("click", fcLearned);
 document.addEventListener("DOMContentLoaded", renderCardFront);
