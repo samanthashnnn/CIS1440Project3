@@ -32,8 +32,9 @@
                     <p id="completedCount"></p>
                 </div>
                 <div id="currentFC">
-                    <p id="fcFront" lang="ja"></p>
-                    <p id="fcBack"></p>
+                    <div id="fcFront" lang="ja"><p>Kanji<br><span id="kanji"></span></p></div>
+                    <div id="fcBack" class="hidden"><p>Meaning<br><span id="meaning"></span></p></div>
+                    <div><p>Learned: <span id="learned"></span>/20</p></div>
                     <nav id="fcNav">
                         <button id="fcNavFlip">Flip</button>
                         <button id="fcNavLearned">Learned</button>
@@ -65,6 +66,6 @@
         <p>&copy;2025 Samantha Shannon</p>
         <button class="modeToggle"></button>
     </footer>
-    <script src="scripts/ap.js"></script>
+    <script src="scripts/ap.js" defer></script>
 </body>
 </html>

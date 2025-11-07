@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", showFC);
+
+
 const terms = [
     {front:"犬", back:"Dog", img:"dog.png"},
     {front:"猫", back:"Cat", img:"cat.png"},
@@ -22,66 +25,50 @@ const terms = [
 ]
 
 const learnedCards = [];
-const currentCardFront = document.querySelector("#fcFront");
-const currentCardBack = document.querySelector("#fcBack");
-const fcNav = document.querySelector("#fcNav");
+const fcCurrent = document.querySelector("#currentFC");
+const fcFront = document.querySelector("#fcFront");
+const fcBack = document.querySelector("#fcBack");
+const kanji = document.querySelector("#kanji");
+const meaning = document.querySelector("#meaning");
+const learnedCounter = document.querySelector("#learned");
+let cardNum = 0;
 
-let loopNum = 0;
-let mode = "fc";
+document.querySelector("#fcNavLearned").addEventListener('click', fcLearned);
+document.querySelector("#fcNavFlip").addEventListener('click', flipFC);
 
-document.querySelector("#fcNavNext").addEventListener("click", moveToNextCard); //this one renamed to skip
-document.querySelector("#fcNavFlip").addEventListener("click", renderCardBack);
-document.querySelector("#fcNavLearned").addEventListener("click", fcLearned);
-document.addEventListener("DOMContentLoaded", renderCardFront);
 
-function renderCardFront(){
-    if(terms.length === 0) return;
-    currentCardFront.hidden = false;
-    currentCardBack.hidden = true;
-    currentCardFront.textContent = terms[loopNum].front;
+function showFC(){
+    kanji.textContent = terms[cardNum].front;
 }
 
-function renderCardBack(){
-    currentCardFront.hidden = true;
-    currentCardBack.hidden = false;
-    currentCardBack.textContent = terms[loopNum].back;
+function showBack(){
+    meaning.textContent = terms[cardNum].back;
 }
 
-function moveToNextCard(){
-    loopNum++;
-    if(loopNum >= terms.length){
-        loopNum = 0;
-        checkWinCon();
+function flipFC(){
+    fcFront.classList.toggle("hidden");
+    fcBack.classList.toggle("hidden");
+    if(fcFront.classList.contains("hidden")) {
+        showBack();
+    } else {
+        showFC();
     }
-    renderCardFront();
 }
 
 function fcLearned(){
-    learnedCards.push(terms.splice(loopNum, 1)[0]);
-    if(loopNum>= terms.length) loopNum = 0;
-    console.log(learnedCards);
-    checkWinCon(true);
-    renderCardFront();
-}
-
-function checkWinCon(learned = false){
-    if (mode == "fc"){
-        if (terms.length === 0 && learnedCards.length === 20){
-            console.log("You've learned all the animal kanji for the day");
-            displayWin();
-        } else if(!learned){
-            loopNum++;
-        }
-    } else if (mode == "mm"){
-
+    learnedCards.push(terms.splice(cardNum,1)[0]);
+    if(cardNum >= terms.length) cardNum = 0;
+    
+    if (terms.length > 0){
+        learnedCounter.textContent = learnedCards.length;
+        if(fcFront.classList.contains("hidden")) {
+        fcFront.classList.toggle("hidden");
+        fcBack.classList.toggle("hidden");
+        showFC();
+    } else {
+        showFC();
+    }
+    } else {
+        learnedCounter.textContent = "you did it";
     }
 }
-
-function displayWin(){
-    currentCardFront.hidden = true;
-    currentCardBack.hidden = true;
-    fcNav.hidden = true;
-}
-
-
-
