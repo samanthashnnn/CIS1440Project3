@@ -32,21 +32,27 @@
                     <p id="completedCount"></p>
                 </div>
                 <div id="currentFC">
-                    <div id="fcFront" lang="ja"><p>Kanji<br><span id="kanji"></span></p></div>
-                    <div id="fcBack" class="hidden"><p>Meaning<br><span id="meaning"></span></p></div>
-                    <div><p>Learned: <span id="learned"></span>/20</p></div>
-                    <nav id="fcNav">
-                        <button id="fcNavFlip">Flip</button>
-                        <button id="fcNavLearned">Learned</button>
-                        <button id="fcNavNext">Skip</button>
-                    </nav>
+                    <div id="fcFront" lang="ja"><p>Kanji<br><br><span id="kanji"></span></p></div>
+                    <div id="fcBack" class="hidden"><p>Meaning<br><br><span id="meaning"></span></p></div>
+                </div>
+                
+            </article>
+            <div>
+                <p id="cardNumber"></p>
+                <div>
+                    <p>Learned: <span id="learned"></span></p>
                 </div>
                 <div id="upcomingFCStack">
-                    <p id="upcomingCount"></p>
+                    <p>left: <span id="upcomingCount"></span></p>
                 </div>
-            </article>
+                <nav id="fcNav">
+                    <button id="fcNavFlip">Flip</button>
+                    <button id="fcNavLearned">Learned</button>
+                    <button id="fcNavSkip">Skip</button>
+                </nav>
+            </div>
         </section>
-        <section id="mgCard">
+        <section id="mgCard" class="hidden">
             <h3>Memory Game</h3>
             <button class="refreshBtn" id="mgRefresh">Refresh</button>
             <article id="mgGameBoard">
@@ -63,8 +69,9 @@
         </section>
     </main>
     <footer>
+        <button id="modeToggle">Match</button>
         <p>&copy;2025 Samantha Shannon</p>
-        <button class="modeToggle"></button>
+        
     </footer>
     <script src="scripts/ap.js" defer></script>
 </body>

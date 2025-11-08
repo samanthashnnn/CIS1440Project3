@@ -32,6 +32,23 @@
 }
 
 /*homepage styling*/
+body{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    min-height: 97vh;
+
+}
+
+main{
+    flex-grow: 1;
+}
+
+footer{
+    align-self: flex-end;
+    display: flex;
+}
+
 h1{
     font-family: "Happy Monkey";
 }
@@ -41,16 +58,50 @@ h3{
 }
 
 
+
 /*flashcard mode*/
-#fcCard{
-    background-color: azure;
-    border: 1px solid black;
-    margin: var(--four) auto;
-    width: 75%;
-    padding:var(--three);
+#fcCard, #mgCard{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    gap: var(--one);
+    height: 75vh;
+}
+
+#fcGameBoard{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#currentFC{
+    background-color: darkslateblue;
+    border: 15px double antiquewhite;
+    color: antiquewhite;
+    height:100%;
+
+    aspect-ratio: 635/888;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    text-align: center;
 }
 
 .hidden{
     visibility: hidden;
+    position:absolute;
+    top: -100px;
 }
 
+p{
+    font-weight: bolder;
+}
+
+span{
+    font-weight: lighter;
+}
