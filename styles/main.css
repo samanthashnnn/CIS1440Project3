@@ -60,7 +60,7 @@ h3{
 
 
 /*flashcard mode*/
-#fcCard, #mgCard{
+#fcCard{
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -105,3 +105,70 @@ p{
 span{
     font-weight: lighter;
 }
+
+/*memory Match mode*/
+#mmCard{
+    display: flex;
+    justify-items: space-between;
+    align-items: center;
+    max-height: 90vh;
+}
+
+#mgGameBoard{
+   max-height: 100%;
+   max-width: 90vw;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-template-rows: repeat(3, 1fr);
+   gap: var(--one);
+   padding: var(--one);
+   border: 7px inset brown;
+   background-color: rgb(53, 101, 77);
+    overflow: auto;
+    margin: auto;
+}
+
+.mmUp{
+    background-color: darkslateblue;
+    border: 10px double antiquewhite;
+    color: antiquewhite;
+    border-radius: 20px;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+    aspect-ratio:5/7;
+    box-shadow: 2px 2px 3px black;
+    min-width: 100px;
+    display: flex;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    align-items: center;
+    justify-content: center;
+}
+
+.mmDown{
+    background-color: antiquewhite;
+    border: 15px double darkslateblue;
+    color: darkslateblue;
+    border-radius: 20px;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+    aspect-ratio:5/7;
+    box-shadow: 2px 2px 3px black;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.mmDown p{
+    padding: .5em;
+    font-size: clamp(.5em, 1em, 2em);
+}
+

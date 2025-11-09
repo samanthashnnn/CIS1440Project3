@@ -1,3 +1,5 @@
+/*first draft of flashcard mode*/
+
 const terms = [
     {front:"犬", back:"Dog", img:"dog.png"},
     {front:"猫", back:"Cat", img:"cat.png"},

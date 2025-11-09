@@ -33,6 +33,10 @@ const meaning = document.querySelector("#meaning");
 const learnedCounter = document.querySelector("#learned");
 const upcomingCount = document.querySelector("#upcomingCount");
 const numberedCard = document.querySelector("#cardNumber");
+/*toggle mode code*/
+const fcMode = document.querySelector("#fcCard");
+const mmMode = document.querySelector("#mmCard");
+
 let cardNum = 0;
 
 const learnedbtn = document.querySelector("#fcNavLearned");
@@ -41,8 +45,11 @@ const flipbtn = document.querySelector("#fcNavFlip");
 flipbtn.addEventListener('click', fcFlip);
 const skipbtn = document.querySelector("#fcNavSkip");
 skipbtn.addEventListener('click', fcSkip);
-document.querySelector("#modeToggle").addEventListener('click', modeToggle);
 document.querySelector("#fcRefresh").addEventListener('click', fcRefresh);
+/*toggle mode code*/
+const modeTogglebtn = document.querySelector("#modeToggle");
+modeTogglebtn.addEventListener('click', modeToggle);
+
 
 function updateCount(){   
     upcomingCount.textContent = terms.length;
@@ -52,7 +59,7 @@ function updateCount(){
 function showFC(){
     kanji.textContent = terms[cardNum].front;
     if(fcFront.classList.contains("hidden")){
-       justToggle();
+       justToggle(fcFront, fcBack);
     }    
     updateCount();
 }
@@ -61,9 +68,9 @@ function showBack(){
     meaning.textContent = terms[cardNum].back;
 }
 
-function justToggle(){
-    fcFront.classList.toggle("hidden");
-    fcBack.classList.toggle("hidden");
+function justToggle(one, two){
+    one.classList.toggle("hidden");
+    two.classList.toggle("hidden");
 }
 
 function noClick(btn){
@@ -75,7 +82,7 @@ function noClick(btn){
 
 function fcFlip(){
     noClick(flipbtn);
-    justToggle();
+    justToggle(fcBack, fcFront);
     if(fcFront.classList.contains("hidden")) {
         showBack();
     } else {
@@ -98,7 +105,7 @@ function fcLearned(){
     if (terms.length > 0){
         learnedCounter.textContent = learnedCards.length + "/20";
         if(fcFront.classList.contains("hidden")) {
-        justToggle();
+        justToggle(fcBack, fcFront);
         showFC();
     } else {
         showFC();
@@ -115,4 +122,41 @@ function fcRefresh(){
     learnedCards = [];
     updateCount();
     showFC();
+}
+
+/*toggle mode code*/
+function modeToggle(){
+    noClick(modeTogglebtn);
+
+    justToggle(fcMode, mmMode);
+
+    if(fcMode.classList.contains('hidden')){
+        modeTogglebtn.innerText = "Flashcards";
+        mmRender()
+    } else {
+        modeTogglebtn.innerText = "Match";
+
+    }
+}
+
+function getRandomIntInclusive(min, max){
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random()*(maxFloored - minCeiled + 1) + minCeiled);
+}
+
+function mmRender(){
+    
+    let mmDeck = new Array(12);
+    let ranTwelve = getRandomIntInclusive(0, 12);
+
+    let mmCards = Array.from({length:6},() => terms[getRandomIntInclusive(0,20)]);
+    
+    console.log(mmCards);
+    
+
+    
+    //create array with 6 random terms
+
+    //for each mmCards.front pick random open slot in mmDeck[]
 }
