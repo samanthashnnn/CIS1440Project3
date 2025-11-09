@@ -37,7 +37,15 @@ body{
     flex-direction: column;
     align-content: space-between;
     min-height: 97vh;
+    margin: var(--three);
+}
 
+header{
+    display: flex;
+}
+
+h1{
+    margin: var(--one) auto;
 }
 
 main{
@@ -95,7 +103,6 @@ h3{
 .hidden{
     visibility: hidden;
     position:absolute;
-    top: -100px;
 }
 
 p{
@@ -112,63 +119,58 @@ span{
     justify-items: space-between;
     align-items: center;
     max-height: 90vh;
+    border: 10px inset brown;
+   background-color: rgb(53, 101, 77);
 }
 
-#mgGameBoard{
-   max-height: 100%;
-   max-width: 90vw;
-   display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   grid-template-rows: repeat(3, 1fr);
-   gap: var(--one);
-   padding: var(--one);
-   border: 7px inset brown;
-   background-color: rgb(53, 101, 77);
+#mmGameBoard{
+    max-height: 100%;
+    max-width: 90vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: var(--one);
+    padding: var(--one);
     overflow: auto;
     margin: auto;
+}
+
+.mmSlot{
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+    aspect-ratio:5/7;
+    min-width: 100px;
+}
+
+.mmUp, .mmDown{
+    border-radius: 20px;
+    box-shadow: 2px 2px 3px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    padding: .5em;
 }
 
 .mmUp{
     background-color: darkslateblue;
     border: 10px double antiquewhite;
     color: antiquewhite;
-    border-radius: 20px;
-    object-fit: contain;
-    max-height: 100%;
-    max-width: 100%;
-    aspect-ratio:5/7;
-    box-shadow: 2px 2px 3px black;
-    min-width: 100px;
-    display: flex;
-    writing-mode: vertical-rl;
     text-orientation: upright;
-    align-items: center;
-    justify-content: center;
+    writing-mode: vertical-rl;
 }
 
 .mmDown{
     background-color: antiquewhite;
     border: 15px double darkslateblue;
     color: darkslateblue;
-    border-radius: 20px;
-    object-fit: contain;
-    max-height: 100%;
-    max-width: 100%;
-    aspect-ratio:5/7;
-    box-shadow: 2px 2px 3px black;
-
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    overflow: hidden;
-    word-wrap: break-word;
+    height: 100%;
 }
 
 .mmDown p{
-    padding: .5em;
     font-size: clamp(.5em, 1em, 2em);
 }
 

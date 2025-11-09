@@ -25,6 +25,10 @@ let terms = [
 ]
 
 let learnedCards = [];
+//both
+const title = document.querySelector("#title");
+
+//fc mode
 const fcCurrent = document.querySelector("#currentFC");
 const fcFront = document.querySelector("#fcFront");
 const fcBack = document.querySelector("#fcBack");
@@ -36,6 +40,11 @@ const numberedCard = document.querySelector("#cardNumber");
 /*toggle mode code*/
 const fcMode = document.querySelector("#fcCard");
 const mmMode = document.querySelector("#mmCard");
+
+//memory match mode
+const mmGameBoard = document.querySelector("#mmGameBoard");
+const mmSlots = document.querySelectorAll(".mmSlot");
+
 
 let cardNum = 0;
 
@@ -132,9 +141,11 @@ function modeToggle(){
 
     if(fcMode.classList.contains('hidden')){
         modeTogglebtn.innerText = "Flashcards";
+        title.innerText =" - Memory Match" ;
         mmRender()
     } else {
         modeTogglebtn.innerText = "Match";
+        title.innerHTML = " - Flashcards";
 
     }
 }
@@ -145,18 +156,32 @@ function getRandomIntInclusive(min, max){
     return Math.floor(Math.random()*(maxFloored - minCeiled + 1) + minCeiled);
 }
 
+//function mmRefresh(){}
+
 function mmRender(){
     
     let mmDeck = new Array(12);
     let ranTwelve = getRandomIntInclusive(0, 12);
 
-    let mmCards = Array.from({length:6},() => terms[getRandomIntInclusive(0,20)]);
-    
-    console.log(mmCards);
-    
+    let fcCards = Array.from({length:6},() => terms[getRandomIntInclusive(0,19)]);
+    let mmCards = fcCards.flatMap(card =>[
+        {content: card.front, pairId: card.num},
+        {content: card.back, pairId: card.num}
+    ]);
 
-    
-    //create array with 6 random terms
+    mmCards.sort(() => Math.random() - 0.5);
 
-    //for each mmCards.front pick random open slot in mmDeck[]
+
+    mmCards.forEach((card, index) => {
+        let mmDiv = document.createElement("div")
+        mmDiv.classList.add("mmDown");
+
+        let mmP = document.createElement("p");
+        mmP.textContent = card.content;
+        
+        mmDiv.appendChild(mmP);
+
+        mmSlots[index].appendChild(mmDiv);
+    });
+
 }
