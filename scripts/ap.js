@@ -43,7 +43,6 @@ const mmMode = document.querySelector("#mmCard");
 
 //memory match mode
 const mmGameBoard = document.querySelector("#mmGameBoard");
-const mmSlots = document.querySelectorAll(".mmSlot");
 
 
 let cardNum = 0;
@@ -58,6 +57,13 @@ document.querySelector("#fcRefresh").addEventListener('click', fcRefresh);
 /*toggle mode code*/
 const modeTogglebtn = document.querySelector("#modeToggle");
 modeTogglebtn.addEventListener('click', modeToggle);
+
+//memory match mode
+const mmSlots = document.querySelectorAll(".mmSlot");
+mmSlots.forEach(slot => {
+    slot.addEventListener("click", () => mmFlip(slot));
+    slot.addEventListener("mouseenter", () => slot.classList.add("mmHover"));
+});
 
 
 function updateCount(){   
@@ -82,15 +88,27 @@ function justToggle(one, two){
     two.classList.toggle("hidden");
 }
 
-function noClick(btn){
-    btn.disabled = true;
+function noClick(e, time){
+    e.classList.add("no-click");
+    e.dataset.noClick = "true";
     setTimeout( function(){
-        btn.disabled = false;
-    } , 500);
+        e.classList.remove("no-click");
+        delete e.dataset.noClick;
+    } , time);
 }
 
+function mmFlip(slot){
+    noClick(slot, 3000);
+    let front = slot.children[0];
+    let back = slot.children[1];
+    justToggle(front, back);
+
+}
+
+
+
 function fcFlip(){
-    noClick(flipbtn);
+    noClick(flipbtn, 500);
     justToggle(fcBack, fcFront);
     if(fcFront.classList.contains("hidden")) {
         showBack();
@@ -100,14 +118,14 @@ function fcFlip(){
 }
 
 function fcSkip(){
-    noClick(skipbtn);
+    noClick(skipbtn, 500);
     cardNum++;
     if(cardNum >= terms.length) cardNum = 0;
     showFC();
 }
 
 function fcLearned(){
-    noClick(learnedbtn);
+    noClick(learnedbtn, 500);
     learnedCards.push(terms.splice(cardNum,1)[0]);
     if(cardNum >= terms.length) cardNum = 0;
     
@@ -126,6 +144,7 @@ function fcLearned(){
 }
 
 function fcRefresh(){
+    noClick(fcRefresh, 1000)
     cardNum = 0;
     terms = learnedCards.concat(terms);
     learnedCards = [];
@@ -135,7 +154,7 @@ function fcRefresh(){
 
 /*toggle mode code*/
 function modeToggle(){
-    noClick(modeTogglebtn);
+    noClick(modeTogglebtn, 1000);
 
     justToggle(fcMode, mmMode);
 
@@ -159,9 +178,6 @@ function getRandomIntInclusive(min, max){
 //function mmRefresh(){}
 
 function mmRender(){
-    
-    let mmDeck = new Array(12);
-    let ranTwelve = getRandomIntInclusive(0, 12);
 
     let fcCards = Array.from({length:6},() => terms[getRandomIntInclusive(0,19)]);
     let mmCards = fcCards.flatMap(card =>[
@@ -174,7 +190,7 @@ function mmRender(){
 
     mmCards.forEach((card, index) => {
         let mmDiv = document.createElement("div")
-        mmDiv.classList.add("mmDown");
+        mmDiv.classList.add("mmDown", "hidden");
 
         let mmP = document.createElement("p");
         mmP.textContent = card.content;
