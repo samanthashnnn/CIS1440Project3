@@ -45,7 +45,6 @@ const mmMode = document.querySelector("#mmCard");
 const mmGameBoard = document.querySelector("#mmGameBoard");
 const movesP = document.querySelector("#moveDisplay");
 
-
 let cardNum = 0;
 let firstCard = null;
 let secondCard = null;
@@ -58,17 +57,28 @@ const flipbtn = document.querySelector("#fcNavFlip");
 flipbtn.addEventListener('click', fcFlip);
 const skipbtn = document.querySelector("#fcNavSkip");
 skipbtn.addEventListener('click', fcSkip);
-document.querySelector("#fcRefresh").addEventListener('click', fcRefresh);
+const fcRefreshBtn = document.querySelector("#fcRefresh")
+fcRefreshBtn.addEventListener('click', fcRefresh);
 /*toggle mode code*/
 const modeTogglebtn = document.querySelector("#modeToggle");
 modeTogglebtn.addEventListener('click', modeToggle);
 
 //memory match mode
 const mmSlots = document.querySelectorAll(".mmSlot");
-mmSlots.forEach(slot => {
+function addEListeners(){
+    mmSlots.forEach(slot => {
     slot.addEventListener("click", () => mmFlip(slot));
    // slot.addEventListener("mouseenter", () => slot.classList.add("mmHover"));
 });
+}
+function removeEListeners(){
+    mmSlots.forEach(slot => {
+    slot.removeEventListener("click", () => mmFlip(slot));
+});
+}
+
+const mmUps = document.querySelectorAll(".mmUp")
+
 const mmRefreshBtn = document.querySelector("#mmRefresh");
 mmRefreshBtn.addEventListener('click', mmRefresh);
 
@@ -76,7 +86,7 @@ mmRefreshBtn.addEventListener('click', mmRefresh);
 function updateCount(){   
     upcomingCount.textContent = terms.length;
     learnedCounter.textContent = learnedCards.length;
-    numberedCard.textContent = "card number: " + terms[cardNum].num;
+    numberedCard.textContent = "Card Number: " + terms[cardNum].num + " out of 20";
 }
 function showFC(){
     kanji.textContent = terms[cardNum].front;
@@ -141,7 +151,7 @@ function fcLearned(){
 }
 
 function fcRefresh(){
-    noClick(fcRefresh, 1000)
+    noClick(fcRefreshBtn, 1000)
     cardNum = 0;
     terms = learnedCards.concat(terms);
     learnedCards = [];
@@ -178,7 +188,15 @@ function ranSort(array){
     array.sort(() => Math.random() - 0.5)
 }
 
+
 function mmRender(){
+
+    addEListeners();
+
+    //clear extra classes
+    mmUps.forEach((card) => {
+        card.classList.remove("hidden")
+    })
 
     let fcCards = Array.from({length:6},() => terms[getRandomIntInclusive(0,19)]);
     let mmCards = fcCards.flatMap(card =>[
@@ -205,6 +223,7 @@ function mmRender(){
         mmSlots[index].appendChild(mmDiv);
     });
 
+    displayMoves();
 
 }
 
@@ -213,7 +232,10 @@ function displayMoves(){
 }
 
 function mmFlip(slot){
-    if(boardLocked) return;
+    if(boardLocked) {
+        removeEListeners();
+        return;
+    };
     if (slot.classList.contains("matched")) return;
 
     const front = slot.children[0];
@@ -267,9 +289,12 @@ function mmRefresh(){
     resetTurn();
     moves = 0;
     mmSlots.forEach((slot, index) =>{
+        //front
+        let childOne
         slot.classList.remove("matched")
         slot.querySelectorAll(".mmDown").forEach(child => child.remove())
     })
     mmRender();
-    displayMoves();
+
+    console.log(mmSlots);
 }
