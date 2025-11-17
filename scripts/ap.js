@@ -43,9 +43,14 @@ const mmMode = document.querySelector("#mmCard");
 
 //memory match mode
 const mmGameBoard = document.querySelector("#mmGameBoard");
+const movesP = document.querySelector("#moveDisplay");
 
 
 let cardNum = 0;
+let firstCard = null;
+let secondCard = null;
+let boardLocked = false;
+let moves = 0;
 
 const learnedbtn = document.querySelector("#fcNavLearned");
 learnedbtn.addEventListener('click', fcLearned);
@@ -62,8 +67,10 @@ modeTogglebtn.addEventListener('click', modeToggle);
 const mmSlots = document.querySelectorAll(".mmSlot");
 mmSlots.forEach(slot => {
     slot.addEventListener("click", () => mmFlip(slot));
-    slot.addEventListener("mouseenter", () => slot.classList.add("mmHover"));
+   // slot.addEventListener("mouseenter", () => slot.classList.add("mmHover"));
 });
+const mmRefreshBtn = document.querySelector("#mmRefresh");
+mmRefreshBtn.addEventListener('click', mmRefresh);
 
 
 function updateCount(){   
@@ -96,16 +103,6 @@ function noClick(e, time){
         delete e.dataset.noClick;
     } , time);
 }
-
-function mmFlip(slot){
-    noClick(slot, 3000);
-    let front = slot.children[0];
-    let back = slot.children[1];
-    justToggle(front, back);
-
-}
-
-
 
 function fcFlip(){
     noClick(flipbtn, 500);
@@ -177,6 +174,10 @@ function getRandomIntInclusive(min, max){
 
 //function mmRefresh(){}
 
+function ranSort(array){
+    array.sort(() => Math.random() - 0.5)
+}
+
 function mmRender(){
 
     let fcCards = Array.from({length:6},() => terms[getRandomIntInclusive(0,19)]);
@@ -185,7 +186,7 @@ function mmRender(){
         {content: card.back, pairId: card.num}
     ]);
 
-    mmCards.sort(() => Math.random() - 0.5);
+    ranSort(mmCards);
 
 
     mmCards.forEach((card, index) => {
@@ -193,11 +194,82 @@ function mmRender(){
         mmDiv.classList.add("mmDown", "hidden");
 
         let mmP = document.createElement("p");
+        let mmId = document.createElement("p");
+        mmId.classList.add("hidden")
         mmP.textContent = card.content;
+        mmId.textContent = card.pairId;
         
         mmDiv.appendChild(mmP);
+        mmDiv.appendChild(mmId);
 
         mmSlots[index].appendChild(mmDiv);
     });
 
+
+}
+
+function displayMoves(){
+    movesP.textContent = moves;
+}
+
+function mmFlip(slot){
+    if(boardLocked) return;
+    if (slot.classList.contains("matched")) return;
+
+    const front = slot.children[0];
+    const back = slot.children[1];
+
+    if(firstCard && firstCard.slot ===slot) return
+
+    justToggle(front, back);
+
+    if (!firstCard){
+        firstCard = {slot, front, back};
+        return;
+    }
+
+    secondCard = {slot, front, back};
+    boardLocked = true;
+
+    checkMatch();
+}
+
+function checkMatch(){
+    moves++;
+    displayMoves();
+    const id1 = firstCard.back.lastChild.textContent;
+    const id2 = secondCard.back.lastChild.textContent;
+
+    const isMatch = id1 === id2;
+
+    if(isMatch){
+        firstCard.slot.classList.add("matched")
+        secondCard.slot.classList.add("matched")
+
+        resetTurn();
+    } else {
+        setTimeout(() => {
+            justToggle(firstCard.front, firstCard.back);
+            justToggle(secondCard.front, secondCard.back);
+            resetTurn();
+        }, 1200);
+    }
+}
+
+function resetTurn(){
+    firstCard = null;
+    secondCard = null;
+    boardLocked = false;
+}
+
+function mmRefresh(){
+    noClick(mmRefreshBtn, 1000)
+    resetTurn();
+    moves = 0;
+    mmSlots.forEach((slot, index) =>{
+        slot.classList.remove("matched")
+        slot.querySelectorAll(".mmDown").forEach(child => child.remove())
+    })
+    mmRender();
+    displayMoves();
 }
